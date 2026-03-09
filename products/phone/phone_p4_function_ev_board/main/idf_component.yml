@@ -7,8 +7,10 @@ dependencies:
 
   brookesia_core:
     version: "*"
-    override_path: "../../../../core/brookesia_core"
+    git: https://github.com/phamky1/esp-owlet.git
+    path: core/brookesia_core
 
   brookesia_app_squareline_demo:
     version: "*"
-    override_path: "../../../../apps/brookesia_app_squareline_demo"
+    git: https://github.com/phamky1/esp-owlet.git
+    path: apps/brookesia_app_squareline_demo
