@@ -4,6 +4,8 @@
 
 这个示例演示了如何在 [ESP32-P4-Function-EV-Board](https://docs.espressif.com/projects/esp-dev-kits/zh_CN/latest/esp32p4/esp32-p4-function-ev-board/index.html) 开发板上运行 ESP-Brookesia Phone，并使用 `1024 x 600` 分辨率的 UI 样式表。
 
+本项目可以作为**独立仓库**构建。所需组件（`brookesia_core`、`brookesia_app_squareline_demo`）会通过 ESP-IDF Component Manager 自动从 [esp-owlet](https://github.com/phamky1/esp-owlet) 仓库获取。
+
 ## 入门指南
 
 ### 硬件要求
@@ -15,13 +17,16 @@
 - 此示例支持 IDF release/v5.3 及更高的分支。默认情况下，它在 IDF release/v5.3 上运行。
 - 请按照 [ESP-IDF 编程指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html) 设置开发环境。**我们强烈建议**您 [构建第一个项目](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#build-your-first-project)，以熟悉 ESP-IDF 并确保环境设置正确。
 
-### 获取 esp-brookesia 仓库
+### 获取仓库
 
-要从 esp-brookesia 示例开始，请在终端运行以下命令，将仓库克隆到本地电脑：
+要将此项目作为独立仓库构建，请在终端运行以下命令将其克隆到本地电脑：
 
 ```
-git clone --recursive https://github.com/espressif/esp-brookesia.git
+git clone https://github.com/phamky1/phone_p4_function_ev_board.git
+cd phone_p4_function_ev_board
 ```
+
+ESP-IDF Component Manager 会在构建过程中自动从 [esp-owlet](https://github.com/phamky1/esp-owlet) 仓库下载所需组件。
 
 ### 配置
 
@@ -41,11 +46,22 @@ idf.py -p PORT flash monitor
 
 完整的配置和使用 ESP-IDF 构建项目的步骤，请参见 [ESP-IDF 入门指南](https://docs.espressif.com/projects/esp-idf/zh_CN/latest/get-started/index.html)。
 
+## 依赖关系
+
+本项目依赖于 [esp-owlet](https://github.com/phamky1/esp-owlet) 仓库中的以下组件：
+
+| 组件 | 在 esp-owlet 中的路径 | 描述 |
+|------|----------------------|------|
+| `brookesia_core` | `core/brookesia_core` | 核心框架组件，包含 GUI、系统和服务 |
+| `brookesia_app_squareline_demo` | `apps/brookesia_app_squareline_demo` | SquareLine Studio 示例应用 |
+
+这些组件通过 ESP-IDF Component Manager 使用 `main/idf_component.yml` 中定义的 git 引用自动获取。
+
 ## 技术支持和反馈
 
 请使用以下反馈渠道：
 
 - 有技术问题，请访问 [esp32.com](https://esp32.com/viewforum.php?f=35) 论坛。
-- 如需提交功能请求或错误报告，请创建 [GitHub issue](https://github.com/espressif/esp-brookesia/issues)。
+- 如需提交功能请求或错误报告，请创建 [GitHub issue](https://github.com/phamky1/esp-owlet/issues)。
 
 我们会尽快回复您。

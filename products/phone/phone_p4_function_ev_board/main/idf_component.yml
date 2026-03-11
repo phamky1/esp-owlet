@@ -6,9 +6,11 @@ dependencies:
   espressif/esp32_p4_function_ev_board: "5.0.*"
 
   brookesia_core:
-    version: "*"
-    override_path: "../../../../core/brookesia_core"
+    git: https://github.com/phamky1/esp-owlet.git
+    path: core/brookesia_core
+    version: master
 
   brookesia_app_squareline_demo:
-    version: "*"
-    override_path: "../../../../apps/brookesia_app_squareline_demo"
+    git: https://github.com/phamky1/esp-owlet.git
+    path: apps/brookesia_app_squareline_demo
+    version: master
