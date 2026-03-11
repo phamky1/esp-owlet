@@ -33,7 +33,7 @@ ESP-Owlet (based on ESP-Brookesia) is a monorepo framework for building AIoT pro
 
 ```mermaid
 graph TB
-    subgraph Products["📱 Products Layer"]
+    subgraph Products["Products Layer"]
         P1[Phone P4 EV Board]
         P2[Phone S3 LCD EV Board]
         P3[Phone M5Stack Core S3]
@@ -41,7 +41,7 @@ graph TB
         P5[Speaker]
     end
 
-    subgraph Apps["📦 Application Layer"]
+    subgraph Apps["Application Layer"]
         A1[Settings]
         A2[Calculator]
         A3[Game 2048]
@@ -52,7 +52,7 @@ graph TB
         A8[USB NCM]
     end
 
-    subgraph Agents["🤖 Agent Layer"]
+    subgraph Agents["Agent Layer"]
         AG1[Agent Manager]
         AG2[OpenAI Agent]
         AG3[Coze Agent]
@@ -60,18 +60,18 @@ graph TB
         AG5[Agent Helper]
     end
 
-    subgraph Expression["🎭 Expression Layer"]
+    subgraph Expression["Expression Layer"]
         EX1[Expression Emote]
     end
 
-    subgraph Core["⚙️ Core Layer - brookesia_core"]
+    subgraph Core["Core Layer - brookesia_core"]
         C1[GUI Module]
         C2[AI Framework Module]
         C3[Systems Module]
         C4[Services Module]
     end
 
-    subgraph Services["🔧 Service Layer"]
+    subgraph Services["Service Layer"]
         S1[Service Manager]
         S2[Audio Service]
         S3[WiFi Service]
@@ -80,11 +80,11 @@ graph TB
         S6[Service Helper]
     end
 
-    subgraph Utils["🛠️ Utilities Layer"]
+    subgraph Utils["Utilities Layer"]
         U1[brookesia_lib_utils]
     end
 
-    subgraph External["📚 External Dependencies"]
+    subgraph External["External Dependencies"]
         E1[LVGL 9.2]
         E2[ESP-IDF 5.3+]
         E3[Boost ASIO/JSON/Thread]
@@ -107,22 +107,16 @@ graph TB
 ## 3. Layer Diagram
 
 ```mermaid
-block-beta
-    columns 1
-
-    block:ProductLayer["Products Layer (Hardware-Specific Builds)"]
-        columns 5
-        phone_p4["Phone P4\nEV Board"]
-        phone_s3_lcd["Phone S3\nLCD EV Board"]
-        phone_m5stack["Phone\nM5Stack S3"]
-        phone_box3["Phone\nS3 Box 3"]
-        speaker["Speaker\nProduct"]
+graph TD
+    subgraph ProductLayer["Products Layer - Hardware-Specific Builds"]
+        phone_p4["Phone P4 EV Board"]
+        phone_s3_lcd["Phone S3 LCD EV Board"]
+        phone_m5stack["Phone M5Stack S3"]
+        phone_box3["Phone S3 Box 3"]
+        speaker["Speaker Product"]
     end
 
-    space
-
-    block:AppLayer["Application Layer (Pluggable UI Apps)"]
-        columns 4
+    subgraph AppLayer["Application Layer - Pluggable UI Apps"]
         settings["Settings"]
         calculator["Calculator"]
         game["Game 2048"]
@@ -133,55 +127,45 @@ block-beta
         usb_ncm["USB NCM"]
     end
 
-    space
-
-    block:MiddleLayer["Middleware Layer"]
-        columns 3
-        block:AgentBlock["Agent Layer"]
+    subgraph MiddleLayer["Middleware Layer"]
+        subgraph AgentBlock["Agent Layer"]
             agent_mgr["Agent Manager"]
             openai["OpenAI"]
             coze["Coze"]
             xiaozhi["Xiaozhi"]
         end
-        block:ExprBlock["Expression Layer"]
-            expr_emote["Expression\nEmote"]
+
+        subgraph ExprBlock["Expression Layer"]
+            expr_emote["Expression Emote"]
         end
-        block:CoreBlock["Core (brookesia_core)"]
-            gui["GUI\n(LVGL Wrapper)"]
+
+        subgraph CoreBlock["Core - brookesia_core"]
+            gui["GUI - LVGL Wrapper"]
             ai_fw["AI Framework"]
-            systems["Systems\n(Phone/Speaker)"]
-            services_core["Services\n(Storage NVS)"]
+            systems["Systems - Phone/Speaker"]
+            services_core["Services - Storage NVS"]
         end
     end
 
-    space
-
-    block:ServiceLayer["Service Layer (Plugin-based Microservices)"]
-        columns 6
-        svc_mgr["Service\nManager"]
-        svc_audio["Audio\nService"]
-        svc_wifi["WiFi\nService"]
-        svc_sntp["SNTP\nService"]
-        svc_nvs["NVS\nService"]
-        svc_helper["Service\nHelper"]
+    subgraph ServiceLayer["Service Layer - Plugin-based Microservices"]
+        svc_mgr["Service Manager"]
+        svc_audio["Audio Service"]
+        svc_wifi["WiFi Service"]
+        svc_sntp["SNTP Service"]
+        svc_nvs["NVS Service"]
+        svc_helper["Service Helper"]
     end
 
-    space
-
-    block:UtilsLayer["Utilities Layer"]
-        columns 1
-        utils["brookesia_lib_utils\n(Task Scheduler, State Machine, Plugin System, Profilers, Logging)"]
+    subgraph UtilsLayer["Utilities Layer"]
+        utils["brookesia_lib_utils"]
     end
 
-    space
-
-    block:ExtLayer["External Dependencies"]
-        columns 5
+    subgraph ExtLayer["External Dependencies"]
         lvgl["LVGL 9.2"]
-        idf["ESP-IDF\n5.3+"]
-        boost["Boost\nASIO/JSON"]
-        gmf["GMF Audio\nFramework"]
-        bsp["Hardware\nBSPs"]
+        idf["ESP-IDF 5.3+"]
+        boost["Boost ASIO/JSON"]
+        gmf["GMF Audio Framework"]
+        bsp["Hardware BSPs"]
     end
 
     ProductLayer --> AppLayer
