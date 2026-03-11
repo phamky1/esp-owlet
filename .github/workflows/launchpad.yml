@@ -35,6 +35,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build-phone-p4:
+    name: "Build Phone P4 Function EV Board"
+    runs-on: ubuntu-latest
+    container: espressif/idf:release-v5.4
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - run: mkdir -p images/phone_p4
+      - name: Build product
+        shell: bash
+        run: |
+          cd products/phone/phone_p4_function_ev_board
+          . ${IDF_PATH}/export.sh
+          idf.py set-target esp32p4 && idf.py build
+          pushd build
+          esptool.py --chip esp32p4 merge_bin -o "$GITHUB_WORKSPACE/images/phone_p4/phone_p4_function_ev_board.bin" @flash_args
+          popd
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-images-phone-p4
+          path: images/phone_p4/
+          overwrite: true
+
   build-speaker:
     name: "Build Speaker"
     runs-on: ubuntu-latest
@@ -119,7 +145,7 @@ jobs:
           overwrite: true
 
   deploy:
-    needs: [build-speaker, build-service-console]
+    needs: [build-phone-p4, build-speaker, build-service-console]
 
     environment:
       name: github-pages
@@ -133,8 +159,15 @@ jobs:
 
       - name: Create directory structure
         run: |
+          mkdir -p images/phone_p4
           mkdir -p images/speaker
           mkdir -p images/service_console
+
+      - name: Download phone_p4 builds
+        uses: actions/download-artifact@v4
+        with:
+          name: build-images-phone-p4
+          path: images/phone_p4/
 
       - name: Download speaker builds
         uses: actions/download-artifact@v4
@@ -151,6 +184,11 @@ jobs:
 
       - name: Generate launchpad configs
         run: |
+          # Generate phone_p4 launchpad
+          cd $GITHUB_WORKSPACE/images/phone_p4/
+          ls -la
+          $GITHUB_WORKSPACE/.github/tools/generate_launchpad_config.sh $GITHUB_REPOSITORY phone_p4
+
           # Generate speaker launchpad
           cd $GITHUB_WORKSPACE/images/speaker/
           ls -la
